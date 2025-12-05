@@ -1,0 +1,23 @@
+# Output files
+output/
+*.mp4
+*.webp
+*.webm
+
+# Model files (too large for git)
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+
+# System files
+.DS_Store
+Thumbs.db
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env

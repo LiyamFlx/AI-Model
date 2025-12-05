@@ -1,0 +1,602 @@
+{
+  "id": "simple-image-to-video",
+  "revision": 0,
+  "last_node_id": 20,
+  "last_link_id": 25,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [-400, 100],
+      "size": [300, 314],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [1]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "1. UPLOAD YOUR IMAGE HERE",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": ["example.png", "image"],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 2,
+      "type": "UNETLoader",
+      "pos": [-400, -200],
+      "size": [350, 82],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [2]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.1_vace_14B_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_vace_14B_fp16.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": ["wan2.1_vace_14B_fp16.safetensors", "default"]
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "pos": [-400, -80],
+      "size": [350, 106],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [3]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "umt5_xxl_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": ["umt5_xxl_fp16.safetensors", "wan", "default"]
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [-400, 460],
+      "size": [350, 58],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [4, 5]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "wan_2.1_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": ["wan_2.1_vae.safetensors"]
+    },
+    {
+      "id": 5,
+      "type": "LoraLoader",
+      "pos": [0, -140],
+      "size": [350, 126],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [6]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [7, 8]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "LoraLoader",
+        "models": [
+          {
+            "name": "Wan21_CausVid_14B_T2V_lora_rank32.safetensors",
+            "url": "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_14B_T2V_lora_rank32.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": ["Wan21_CausVid_14B_T2V_lora_rank32.safetensors", 0.4, 1],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [0, 50],
+      "size": [350, 120],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [9]
+        }
+      ],
+      "title": "2. DESCRIBE THE MOTION",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["The subject moves naturally with smooth, gentle motion. The camera slowly pans around capturing the scene with cinematic quality."],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [0, 220],
+      "size": [350, 100],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [10]
+        }
+      ],
+      "title": "Negative (things to avoid)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["overexposure, static, blurry, watermark, low quality, artifacts, ugly, deformed, extra limbs, bad hands, bad face, distorted"],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 8,
+      "type": "WanVaceToVideo",
+      "pos": [400, 50],
+      "size": [315, 254],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 9
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 10
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        },
+        {
+          "name": "control_video",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "control_masks",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [11]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [12]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [13]
+        },
+        {
+          "name": "trim_latent",
+          "type": "INT",
+          "links": [14]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "WanVaceToVideo"
+      },
+      "widgets_values": [512, 512, 97, 1, 1.0]
+    },
+    {
+      "id": 9,
+      "type": "ModelSamplingSD3",
+      "pos": [760, -40],
+      "size": [210, 58],
+      "flags": {"collapsed": true},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [15]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [8]
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [760, 50],
+      "size": [315, 262],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 15
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 11
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [16]
+        }
+      ],
+      "title": "3. CLICK 'Queue' TO GENERATE",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 4, 1, "uni_pc", "simple", 1],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 11,
+      "type": "TrimVideoLatent",
+      "pos": [1120, 150],
+      "size": [210, 58],
+      "flags": {"collapsed": true},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 16
+        },
+        {
+          "name": "trim_amount",
+          "type": "INT",
+          "widget": {"name": "trim_amount"},
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [17]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "TrimVideoLatent"
+      },
+      "widgets_values": [0]
+    },
+    {
+      "id": 12,
+      "type": "VAEDecode",
+      "pos": [1120, 200],
+      "size": [210, 46],
+      "flags": {"collapsed": true},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 17
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [18]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "CreateVideo",
+      "pos": [1120, 250],
+      "size": [270, 78],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [19]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [16]
+    },
+    {
+      "id": 14,
+      "type": "SaveVideo",
+      "pos": [1120, 370],
+      "size": [400, 400],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 19
+        }
+      ],
+      "outputs": [],
+      "title": "4. YOUR VIDEO SAVES HERE",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": ["video/my_video", "auto", "auto"],
+      "color": "#2a363b",
+      "bgcolor": "#3f5159"
+    },
+    {
+      "id": 15,
+      "type": "MarkdownNote",
+      "pos": [-400, -380],
+      "size": [750, 130],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Quick Start Guide",
+      "properties": {},
+      "widgets_values": ["## How to Use (3 Simple Steps)\n\n1. **Upload your image** in the green \"UPLOAD YOUR IMAGE HERE\" node (drag & drop or click to select)\n2. **Edit the motion prompt** to describe how you want the image to move (optional)\n3. **Click \"Queue\"** button to generate your ~6 second video!\n\n*Output will be saved to: ComfyUI/output/video/*"],
+      "color": "#233",
+      "bgcolor": "#355"
+    }
+  ],
+  "links": [
+    [1, 1, 0, 8, 5, "IMAGE"],
+    [2, 2, 0, 5, 0, "MODEL"],
+    [3, 3, 0, 5, 1, "CLIP"],
+    [4, 4, 0, 8, 2, "VAE"],
+    [5, 4, 0, 12, 1, "VAE"],
+    [6, 5, 0, 9, 0, "MODEL"],
+    [7, 5, 1, 6, 0, "CLIP"],
+    [8, 5, 1, 7, 0, "CLIP"],
+    [9, 6, 0, 8, 0, "CONDITIONING"],
+    [10, 7, 0, 8, 1, "CONDITIONING"],
+    [11, 8, 0, 10, 1, "CONDITIONING"],
+    [12, 8, 1, 10, 2, "CONDITIONING"],
+    [13, 8, 2, 10, 3, "LATENT"],
+    [14, 8, 3, 11, 1, "INT"],
+    [15, 9, 0, 10, 0, "MODEL"],
+    [16, 10, 0, 11, 0, "LATENT"],
+    [17, 11, 0, 12, 0, "LATENT"],
+    [18, 12, 0, 13, 0, "IMAGE"],
+    [19, 13, 0, 14, 0, "VIDEO"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Step 1: Load Your Image",
+      "bounding": [-420, 60, 340, 480],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "Step 2: Set Your Prompt",
+      "bounding": [-20, 10, 390, 330],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "Step 3: Generate & Save",
+      "bounding": [740, 10, 800, 780],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "Models (auto-loaded)",
+      "bounding": [-420, -250, 770, 250],
+      "color": "#555",
+      "font_size": 18,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8,
+      "offset": [500, 450]
+    },
+    "frontendVersion": "1.30.6",
+    "node_versions": {
+      "comfy-core": "0.3.34"
+    }
+  },
+  "version": 0.4
+}
