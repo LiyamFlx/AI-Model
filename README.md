@@ -1,12 +1,16 @@
-# Image to Video Generator
+# AI Video Generation Toolkit
 
-Transform any image into a 5-10 second AI-generated video using Wan 2.1 VACE model in ComfyUI.
+Transform images into videos, generate videos from text, or control motion with pose/depth videos using Wan 2.1/2.2 models in ComfyUI.
 
-## What You Get
+## Available Workflows
 
-- **Input**: Any image (PNG, JPG, WebP)
-- **Output**: ~6 second video (MP4) with smooth motion
-- **Quality**: 512x512 resolution at 16fps
+| Workflow | Input | Output | Best For |
+|----------|-------|--------|----------|
+| `image_to_video_simple.json` | Image | 5-10s video | Quick image animation |
+| `image_to_video_optimized.json` | Image | MP4 + WebP | Production I2V with guides |
+| `text_to_video_optimized.json` | Text only | MP4 + WebP | Generate from description |
+| `professional_t2v_pipeline.json` | Text only | MP4 + WebP | Advanced T2V with presets |
+| `wan22_fun_control.json` | Control video + Start image | MP4 + WebP | Pose/depth controlled generation |
 
 ---
 
@@ -25,87 +29,161 @@ Transform any image into a 5-10 second AI-generated video using Wan 2.1 VACE mod
 
 ---
 
-## Quick Setup (15 minutes)
+## Quick Setup
 
 ### Step 1: Install ComfyUI
 
 ```bash
-# Clone ComfyUI
 git clone https://github.com/comfyanonymous/ComfyUI.git
 cd ComfyUI
-
-# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 # OR: venv\Scripts\activate  # Windows
-
-# Install requirements
 pip install -r requirements.txt
 ```
 
 ### Step 2: Download Models
 
-Download these 4 files and place them in the correct folders:
+Choose models based on your workflow:
 
-#### Diffusion Model (~28GB)
-```
-ComfyUI/models/diffusion_models/
-```
-- [wan2.1_vace_14B_fp16.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_vace_14B_fp16.safetensors)
+#### For Image-to-Video (I2V):
+```bash
+# Diffusion Model
+wget -P models/diffusion_models/ https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_vace_14B_fp16.safetensors
 
-#### Text Encoder (~10GB)
-```
-ComfyUI/models/text_encoders/
-```
-- [umt5_xxl_fp16.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors)
+# Text Encoder
+wget -P models/text_encoders/ https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors
 
-#### VAE (~300MB)
-```
-ComfyUI/models/vae/
-```
-- [wan_2.1_vae.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors)
+# VAE
+wget -P models/vae/ https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors
 
-#### LoRA (Speed Boost) (~500MB)
+# Speed LoRA
+wget -P models/loras/ https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_14B_T2V_lora_rank32.safetensors
 ```
-ComfyUI/models/loras/
+
+#### For Text-to-Video (T2V):
+```bash
+# T2V Diffusion Model (instead of VACE)
+wget -P models/diffusion_models/ https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_t2v_14B_fp16.safetensors
 ```
-- [Wan21_CausVid_14B_T2V_lora_rank32.safetensors](https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_14B_T2V_lora_rank32.safetensors)
 
-### Step 3: Copy Workflow
+#### For Wan 2.2 Fun Control:
+```bash
+# High Noise Model (recommended)
+wget -P models/diffusion_models/ https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_high_noise_14B_fp8_scaled.safetensors
 
-Copy `image_to_video_simple.json` to your ComfyUI folder (or anywhere accessible).
+# Low Noise Model (alternative)
+wget -P models/diffusion_models/ https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.2_fun_control_low_noise_14B_fp8_scaled.safetensors
+
+# FP8 Text Encoder (more efficient)
+wget -P models/text_encoders/ https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors
+
+# CLIP Vision (for start frame)
+wget -P models/clip_vision/ https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors
+
+# Matching Speed LoRAs
+wget -P models/loras/ https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors
+wget -P models/loras/ https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors
+```
 
 ---
 
-## How to Use
+## Workflow Guides
 
-### Start ComfyUI
-```bash
-cd ComfyUI
-python main.py
-```
-Open browser: `http://127.0.0.1:8188`
+### Image-to-Video (Simple)
 
-### Generate Your Video
+1. Load `image_to_video_simple.json` in ComfyUI
+2. Upload your image
+3. Edit the prompt to describe desired motion
+4. Click Queue
 
-1. **Load Workflow**: Drag `image_to_video_simple.json` onto ComfyUI window
+**Best for:** Quick animations from existing images
 
-2. **Upload Image**: Click the green "UPLOAD YOUR IMAGE HERE" node and select your image
-   - Best results: Images with a clear subject on solid/simple background
-   - Supported: PNG, JPG, WebP
+### Text-to-Video (Optimized)
 
-3. **Edit Prompt** (optional): Describe the motion you want:
-   ```
-   Examples:
-   - "The person walks forward slowly, hair blowing in the wind"
-   - "The car drives down the road, wheels spinning"
-   - "The flower blooms and sways gently in the breeze"
-   - "The character turns their head and smiles"
-   ```
+1. Load `text_to_video_optimized.json` in ComfyUI
+2. Write detailed prompt describing scene and motion
+3. Adjust resolution and frame count
+4. Click Queue
 
-4. **Click "Queue"**: Press the Queue button and wait (~4-5 minutes on RTX 4090)
+**Best for:** Creating videos purely from text descriptions
 
-5. **Find Your Video**: Output saved to `ComfyUI/output/video/`
+### Wan 2.2 Fun Control
+
+Control video generation with pose, depth, or edge videos!
+
+1. Load `wan22_fun_control.json` in ComfyUI
+2. Upload a **start frame** image (sets appearance)
+3. Upload a **control video** (defines motion)
+4. Write prompt describing the output
+5. Click Queue
+
+**Control Types:**
+| Type | Use For |
+|------|---------|
+| Pose (OpenPose) | Character movement, dancing |
+| Depth | 3D scene structure |
+| Canny | Edge-based control, line art |
+| MLSD | Architecture, straight lines |
+
+**Important:** Match model and LoRA types!
+- High Noise Model → High Noise LoRA
+- Low Noise Model → Low Noise LoRA
+
+---
+
+## Quick Reference
+
+### Resolution Options
+| Size | Ratio | VRAM | Use |
+|------|-------|------|-----|
+| 512x320 | 16:9 | ~15GB | Testing |
+| 832x480 | 16:9 | ~25GB | Standard |
+| 480x832 | 9:16 | ~25GB | TikTok/Reels |
+| 1280x720 | 16:9 | ~40GB | High quality |
+
+### Frame Count → Duration @16fps
+| Frames | Duration |
+|--------|----------|
+| 33 | ~2 sec |
+| 49 | ~3 sec |
+| 81 | ~5 sec |
+| 97 | ~6 sec |
+| 129 | ~8 sec |
+| 161 | ~10 sec |
+
+### LoRA Strength Guide
+| Value | Effect |
+|-------|--------|
+| 0.3 | Stable, slower (~5min) |
+| 0.4 | Balanced (~4min) |
+| 0.5 | Fast, may wobble (~3min) |
+
+---
+
+## Troubleshooting
+
+### Out of Memory (OOM)
+- Lower resolution to 512x320
+- Reduce frame count to 33-49
+- Use fp8 models instead of fp16
+- Close other GPU applications
+
+### Blurry/Shaky Video
+- Lower LoRA strength to 0.3
+- Increase steps to 6-8
+- Use simpler motion descriptions
+- Ensure input image is high quality
+
+### Models Not Loading
+- Verify files are in correct folders
+- Check file names match exactly
+- Restart ComfyUI
+
+### Fun Control Not Working
+- Ensure model and LoRA types match (high→high, low→low)
+- Control video frame count must match output frames
+- Use high contrast control videos
 
 ---
 
@@ -115,92 +193,30 @@ Open browser: `http://127.0.0.1:8188`
 ComfyUI/
 ├── models/
 │   ├── diffusion_models/
-│   │   └── wan2.1_vace_14B_fp16.safetensors
+│   │   ├── wan2.1_vace_14B_fp16.safetensors (I2V)
+│   │   ├── wan2.1_t2v_14B_fp16.safetensors (T2V)
+│   │   └── wan2.2_fun_control_*_14B_fp8_scaled.safetensors
 │   ├── text_encoders/
-│   │   └── umt5_xxl_fp16.safetensors
+│   │   └── umt5_xxl_*.safetensors
+│   ├── clip_vision/
+│   │   └── clip_vision_h.safetensors
 │   ├── loras/
-│   │   └── Wan21_CausVid_14B_T2V_lora_rank32.safetensors
+│   │   ├── Wan21_CausVid_14B_T2V_lora_rank32.safetensors
+│   │   └── wan2.2_i2v_lightx2v_4steps_lora_v1_*.safetensors
 │   └── vae/
 │       └── wan_2.1_vae.safetensors
 ├── output/
-│   └── video/        <-- Your videos save here
+│   ├── video/
+│   ├── t2v_video/
+│   └── fun_control/
 └── main.py
 ```
 
 ---
 
-## Customization
-
-### Change Video Length
-
-In the `WanVaceToVideo` node, edit the `length` value:
-- **81 frames** = ~5 seconds
-- **97 frames** = ~6 seconds (default)
-- **129 frames** = ~8 seconds
-- **161 frames** = ~10 seconds
-
-### Change Resolution
-
-In the `WanVaceToVideo` node:
-- **512x512** - Fast, good quality (default)
-- **768x768** - Higher quality, slower
-- **480p** (832x480) - Widescreen
-
-### Adjust LoRA Strength
-
-In the `LoraLoader` node, the `strength_model` value (0.3-0.7):
-- **0.3** - More stable, closer to original
-- **0.5** - Balanced
-- **0.7** - More motion, may be less stable
-
----
-
-## Troubleshooting
-
-### Out of Memory (OOM)
-- Lower resolution to 512x512
-- Reduce frame count to 81
-- Close other GPU applications
-- Use fp8 text encoder instead of fp16
-
-### Video is Shaky/Blurry
-- Lower LoRA strength to 0.3
-- Use simpler motion prompts
-- Ensure input image has clear subject
-
-### Models Not Loading
-- Verify model files are in correct folders
-- Check file names match exactly
-- Restart ComfyUI
-
-### Generation Takes Too Long
-- The LoRA reduces time from 40min to ~4min
-- First run is slower (model loading)
-- 512x512 is faster than 768x768
-
----
-
-## Tips for Best Results
-
-1. **Image Selection**
-   - Clear subject with simple background works best
-   - Avoid complex scenes with many elements
-   - Higher quality input = better output
-
-2. **Prompt Writing**
-   - Describe motion, not appearance
-   - Be specific: "walks forward" not "moves"
-   - Include camera movement if desired
-
-3. **Iteration**
-   - Try different seeds (randomize is enabled)
-   - Adjust LoRA strength for different effects
-   - Experiment with prompt variations
-
----
-
 ## Credits
 
-- **Model**: [Wan-AI](https://huggingface.co/Wan-AI) - Wan 2.1 VACE
-- **LoRA**: [Kijai](https://huggingface.co/Kijai) - CausVid acceleration
+- **Models**: [Wan-AI](https://huggingface.co/Wan-AI) - Wan 2.1/2.2
+- **LoRAs**: [Kijai](https://huggingface.co/Kijai) - Speed acceleration
 - **Framework**: [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
+- **Repackaged**: [Comfy-Org](https://huggingface.co/Comfy-Org)
