@@ -1,0 +1,840 @@
+{
+  "id": "optimized-image-to-video-v2",
+  "revision": 0,
+  "last_node_id": 30,
+  "last_link_id": 35,
+  "nodes": [
+    {
+      "id": 100,
+      "type": "MarkdownNote",
+      "pos": [-900, -600],
+      "size": [850, 580],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📋 QUICK REFERENCE - Parameter Settings Index",
+      "properties": {},
+      "widgets_values": ["## 🎬 Image-to-Video Workflow v2.0 (Optimized)\n\n---\n\n### ⚡ SPEED PRESETS\n| Mode | Resolution | Frames | LoRA | Steps | Time |\n|------|------------|--------|------|-------|------|\n| 🚀 Preview | 512x512 | 33 | 0.5 | 2 | ~45s |\n| ⚖️ Balanced | 512x512 | 97 | 0.4 | 4 | ~4min |\n| 💎 Quality | 768x768 | 97 | 0.3 | 6 | ~12min |\n| 🎬 Production | 768x768 | 129 | 0.3 | 8 | ~20min |\n\n---\n\n### 📐 RESOLUTION GUIDE\n| Size | Aspect | VRAM | Best For |\n|------|--------|------|----------|\n| 512x512 | 1:1 | ~20GB | Testing |\n| 640x640 | 1:1 | ~28GB | Balanced |\n| 768x768 | 1:1 | ~35GB | Quality |\n| 832x480 | 16:9 | ~25GB | Widescreen |\n| 480x832 | 9:16 | ~25GB | Mobile/TikTok |\n\n---\n\n### ⏱️ FRAME COUNT → DURATION\n| Frames | Duration | Frames | Duration |\n|--------|----------|--------|----------|\n| 33 | ~2 sec | 97 | ~6 sec |\n| 49 | ~3 sec | 129 | ~8 sec |\n| 65 | ~4 sec | 161 | ~10 sec |\n| 81 | ~5 sec | | |\n\n---\n\n### 🎚️ LORA STRENGTH EFFECTS\n| Value | Motion | Stability |\n|-------|--------|----------|\n| 0.2-0.3 | Subtle | Very Stable |\n| 0.4 | Balanced | Stable |\n| 0.5-0.6 | Dynamic | May shake |\n| 0.7 | Maximum | Experimental |"],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 101,
+      "type": "MarkdownNote",
+      "pos": [-900, 20],
+      "size": [400, 320],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📝 PROMPT TEMPLATES",
+      "properties": {},
+      "widgets_values": ["## Copy & Customize These:\n\n**👤 Portrait/Person:**\n```\nThe person blinks naturally and turns head slightly. Subtle breathing motion. Hair moves gently. Cinematic lighting.\n```\n\n**🌄 Landscape/Scene:**\n```\nGentle wind moves through scene. Clouds drift slowly. Leaves rustle. Smooth parallax camera.\n```\n\n**📦 Product/Object:**\n```\nSlow 360 rotation showcasing the object. Smooth turntable motion. Studio lighting.\n```\n\n**🎭 Artistic/Creative:**\n```\nDreamlike flowing motion. Colors shift ethereally. Surreal camera movement.\n```"],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 102,
+      "type": "MarkdownNote",
+      "pos": [-480, 20],
+      "size": [400, 320],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎬 CAMERA MOVEMENT KEYWORDS",
+      "properties": {},
+      "widgets_values": ["## Add to Your Prompts:\n\n**Static/Subtle:**\n- `static camera`\n- `locked off shot`\n- `subtle movement`\n\n**Pan/Tilt:**\n- `slow pan left/right`\n- `gentle tilt up/down`\n- `sweeping pan`\n\n**Dolly/Track:**\n- `dolly in` (move closer)\n- `dolly out` (move away)\n- `tracking shot`\n\n**Orbit:**\n- `orbit around subject`\n- `revolving camera`\n- `360 rotation`\n\n**Cinematic:**\n- `cinematic movement`\n- `dramatic camera`\n- `smooth steadicam`"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [-400, 400],
+      "size": [315, 340],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [1]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "title": "🖼️ STEP 1: Upload Image",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": ["example.png", "image"],
+      "color": "#2a4a2a",
+      "bgcolor": "#3a6a3a"
+    },
+    {
+      "id": 103,
+      "type": "MarkdownNote",
+      "pos": [-400, 760],
+      "size": [315, 200],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "💡 Image Tips",
+      "properties": {},
+      "widgets_values": ["**✅ Best Results:**\n- Clear subject\n- Simple background\n- Good lighting\n- High resolution (1024px+)\n\n**❌ Avoid:**\n- Busy backgrounds\n- Multiple subjects\n- Blurry/low-res\n- Text/watermarks"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 2,
+      "type": "UNETLoader",
+      "pos": [-50, -400],
+      "size": [350, 82],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [2]
+        }
+      ],
+      "title": "🧠 Diffusion Model (14B)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.1_vace_14B_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_vace_14B_fp16.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": ["wan2.1_vace_14B_fp16.safetensors", "default"]
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "pos": [-50, -280],
+      "size": [350, 106],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [3]
+        }
+      ],
+      "title": "📝 Text Encoder",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "umt5_xxl_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": ["umt5_xxl_fp16.safetensors", "wan", "default"]
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [-50, -140],
+      "size": [350, 58],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [4, 5]
+        }
+      ],
+      "title": "🎨 VAE Decoder",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "wan_2.1_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": ["wan_2.1_vae.safetensors"]
+    },
+    {
+      "id": 5,
+      "type": "LoraLoader",
+      "pos": [-50, -50],
+      "size": [350, 126],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [6]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [7, 8]
+        }
+      ],
+      "title": "⚡ Speed LoRA (CausVid)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "LoraLoader",
+        "models": [
+          {
+            "name": "Wan21_CausVid_14B_T2V_lora_rank32.safetensors",
+            "url": "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_14B_T2V_lora_rank32.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": ["Wan21_CausVid_14B_T2V_lora_rank32.safetensors", 0.4, 1],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 104,
+      "type": "MarkdownNote",
+      "pos": [320, -400],
+      "size": [315, 280],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🔧 Model Toolkit Info",
+      "properties": {},
+      "widgets_values": ["**🧠 Diffusion Model:**\n14B = Higher quality, slower\n1.3B = Faster, 480p only\n\n**📝 Text Encoder:**\nfp16 = Better quality (~10GB)\nfp8 = Saves VRAM (~5GB)\n\n**⚡ LoRA Strength:**\n`0.3` → Stable, subtle\n`0.4` → Balanced ⭐\n`0.5` → Dynamic\n`0.6+` → May shake\n\n**💡 Tip:** Lower LoRA = more stable but slower (need more steps)"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [-50, 120],
+      "size": [350, 140],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [9]
+        }
+      ],
+      "title": "✏️ STEP 2: Motion Prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["The subject moves naturally with smooth, gentle motion. Subtle breathing and blinking. The camera slowly orbits around, capturing cinematic depth with soft lighting."],
+      "color": "#2a4a2a",
+      "bgcolor": "#3a6a3a"
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [-50, 300],
+      "size": [350, 100],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [10]
+        }
+      ],
+      "title": "🚫 Negative Prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["overexposure, static, blurry, watermark, low quality, artifacts, ugly, deformed, extra limbs, bad hands, bad face, distorted, jittery, flickering, temporal artifacts, frame jumping"],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 8,
+      "type": "WanVaceToVideo",
+      "pos": [350, 120],
+      "size": [315, 280],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 9
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 10
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        },
+        {
+          "name": "control_video",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "control_masks",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [11]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [12]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [13]
+        },
+        {
+          "name": "trim_latent",
+          "type": "INT",
+          "links": [14]
+        }
+      ],
+      "title": "📐 STEP 3: Video Settings",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "WanVaceToVideo"
+      },
+      "widgets_values": [768, 768, 97, 1, 1.0],
+      "color": "#2a4a2a",
+      "bgcolor": "#3a6a3a"
+    },
+    {
+      "id": 105,
+      "type": "MarkdownNote",
+      "pos": [350, 440],
+      "size": [315, 220],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📐 Video Settings Toolkit",
+      "properties": {},
+      "widgets_values": ["**Width/Height:**\n512 = Fast | 768 = Quality\n\n**Length (frames):**\n33→2s | 49→3s | 81→5s\n97→6s | 129→8s | 161→10s\n\n**Batch Size:** Keep at 1\n\n**Strength:** Keep at 1.0\n\n**💡 Quick Presets:**\n- Preview: 512, 33 frames\n- Default: 768, 97 frames\n- Long: 768, 129 frames"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 9,
+      "type": "ModelSamplingSD3",
+      "pos": [720, -50],
+      "size": [210, 58],
+      "flags": {"collapsed": true},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [15]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [8]
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [720, 0],
+      "size": [315, 280],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 15
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 11
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [16]
+        }
+      ],
+      "title": "🎲 STEP 4: Generate",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 4, 1, "uni_pc", "simple", 1],
+      "color": "#2a4a2a",
+      "bgcolor": "#3a6a3a"
+    },
+    {
+      "id": 106,
+      "type": "MarkdownNote",
+      "pos": [720, 320],
+      "size": [315, 280],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎲 Sampler Toolkit",
+      "properties": {},
+      "widgets_values": ["**Seed:**\n`randomize` = New each time\n`fixed` = Reproducible\n\n**Steps (with LoRA):**\n2 = Draft | 4 = Good ⭐\n6 = Better | 8 = Best\n\n**CFG:** Keep at 1 (with LoRA)\n\n**Sampler:** `uni_pc` ⭐\nAlternatives: euler, dpmpp_2m\n\n**Scheduler:** `simple` ⭐\n\n**💡 Tip:** Note seed when you like a result!"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 11,
+      "type": "TrimVideoLatent",
+      "pos": [1080, 0],
+      "size": [210, 58],
+      "flags": {"collapsed": true},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 16
+        },
+        {
+          "name": "trim_amount",
+          "type": "INT",
+          "widget": {"name": "trim_amount"},
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [17]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "TrimVideoLatent"
+      },
+      "widgets_values": [0]
+    },
+    {
+      "id": 12,
+      "type": "VAEDecode",
+      "pos": [1080, 50],
+      "size": [210, 46],
+      "flags": {"collapsed": true},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 17
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [18, 20, 21]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "PreviewImage",
+      "pos": [1080, 100],
+      "size": [400, 350],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [],
+      "title": "👁️ PREVIEW (First Frame)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#2a3a4a",
+      "bgcolor": "#3a5a7a"
+    },
+    {
+      "id": 13,
+      "type": "CreateVideo",
+      "pos": [1520, 100],
+      "size": [270, 78],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [19]
+        }
+      ],
+      "title": "🎬 Create Video @16fps",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [16]
+    },
+    {
+      "id": 14,
+      "type": "SaveVideo",
+      "pos": [1520, 220],
+      "size": [400, 300],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 19
+        }
+      ],
+      "outputs": [],
+      "title": "💾 OUTPUT 1: MP4 Video",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": ["video/my_video", "auto", "auto"],
+      "color": "#2a4a2a",
+      "bgcolor": "#3a6a3a"
+    },
+    {
+      "id": 21,
+      "type": "SaveAnimatedWEBP",
+      "pos": [1520, 560],
+      "size": [400, 200],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        }
+      ],
+      "outputs": [],
+      "title": "💾 OUTPUT 2: Animated WebP/GIF",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "SaveAnimatedWEBP"
+      },
+      "widgets_values": ["animation/my_animation", 16, true, 90, "default"],
+      "color": "#2a4a2a",
+      "bgcolor": "#3a6a3a"
+    },
+    {
+      "id": 107,
+      "type": "MarkdownNote",
+      "pos": [1520, 780],
+      "size": [400, 150],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "💾 Output Toolkit",
+      "properties": {},
+      "widgets_values": ["**MP4:** Best for sharing, small size\n**WebP:** Good for web, loops nicely\n\n**Output Location:**\n`ComfyUI/output/video/`\n`ComfyUI/output/animation/`\n\n**💡 Tip:** WebP quality 90 = good balance"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 108,
+      "type": "MarkdownNote",
+      "pos": [-900, 380],
+      "size": [400, 280],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🔥 WORKFLOW STEPS",
+      "properties": {},
+      "widgets_values": ["## Quick Workflow:\n\n1️⃣ **Upload Image** (green node)\n↓\n2️⃣ **Write Motion Prompt**\n↓\n3️⃣ **Set Resolution & Frames**\n↓\n4️⃣ **Click Queue Prompt**\n↓\n5️⃣ **Preview Result**\n↓\n6️⃣ **Find in output folder**\n\n---\n**⏱️ Generation:** ~4-5 min (768px, 97 frames)"],
+      "color": "#233",
+      "bgcolor": "#355"
+    },
+    {
+      "id": 109,
+      "type": "MarkdownNote",
+      "pos": [-480, 380],
+      "size": [400, 280],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🛠️ TROUBLESHOOTING",
+      "properties": {},
+      "widgets_values": ["| Problem | Fix |\n|---------|-----|\n| Too shaky | LoRA → 0.3 |\n| Not enough motion | LoRA → 0.5+ |\n| Blurry | Steps → 6 |\n| Out of memory | Res → 512 |\n| Subject distorts | Simpler background |\n| Too slow | Res → 512, Frames → 49 |\n| Artifacts | Add to negative prompt |\n\n**💡 Pro Tip:**\nTest at 512x512, 33 frames first!\nThen scale up when happy."],
+      "color": "#422",
+      "bgcolor": "#633"
+    }
+  ],
+  "links": [
+    [1, 1, 0, 8, 5, "IMAGE"],
+    [2, 2, 0, 5, 0, "MODEL"],
+    [3, 3, 0, 5, 1, "CLIP"],
+    [4, 4, 0, 8, 2, "VAE"],
+    [5, 4, 0, 12, 1, "VAE"],
+    [6, 5, 0, 9, 0, "MODEL"],
+    [7, 5, 1, 6, 0, "CLIP"],
+    [8, 5, 1, 7, 0, "CLIP"],
+    [9, 6, 0, 8, 0, "CONDITIONING"],
+    [10, 7, 0, 8, 1, "CONDITIONING"],
+    [11, 8, 0, 10, 1, "CONDITIONING"],
+    [12, 8, 1, 10, 2, "CONDITIONING"],
+    [13, 8, 2, 10, 3, "LATENT"],
+    [14, 8, 3, 11, 1, "INT"],
+    [15, 9, 0, 10, 0, "MODEL"],
+    [16, 10, 0, 11, 0, "LATENT"],
+    [17, 11, 0, 12, 0, "LATENT"],
+    [18, 12, 0, 13, 0, "IMAGE"],
+    [19, 13, 0, 14, 0, "VIDEO"],
+    [20, 12, 0, 20, 0, "IMAGE"],
+    [21, 12, 0, 21, 0, "IMAGE"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "📋 REFERENCE & GUIDES",
+      "bounding": [-920, -640, 880, 1000],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "🖼️ INPUT",
+      "bounding": [-420, 360, 350, 620],
+      "color": "#3a6a3a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "🔧 MODELS",
+      "bounding": [-70, -440, 720, 400],
+      "color": "#555",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "✏️ PROMPTS",
+      "bounding": [-70, 80, 380, 360],
+      "color": "#3a5a3a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "📐 VIDEO CONFIG",
+      "bounding": [330, 80, 350, 600],
+      "color": "#3a5a3a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "🎲 GENERATION",
+      "bounding": [700, -90, 360, 640],
+      "color": "#3a5a3a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "👁️ PREVIEW",
+      "bounding": [1060, 60, 420, 410],
+      "color": "#3a5a7a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "💾 OUTPUTS",
+      "bounding": [1500, 60, 440, 900],
+      "color": "#3a6a3a",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [950, 700]
+    },
+    "frontendVersion": "1.30.6",
+    "node_versions": {
+      "comfy-core": "0.3.34"
+    }
+  },
+  "version": 0.4
+}

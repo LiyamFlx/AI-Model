@@ -1,0 +1,842 @@
+{
+  "id": "professional-t2v-pipeline-v2",
+  "revision": 0,
+  "last_node_id": 100,
+  "last_link_id": 100,
+  "nodes": [
+    {
+      "id": 1000,
+      "type": "MarkdownNote",
+      "pos": [-1400, -900],
+      "size": [1300, 750],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎬 PROFESSIONAL T2V PIPELINE v2.0 - MASTER CONTROL PANEL",
+      "properties": {},
+      "widgets_values": ["# Professional Text-to-Video Pipeline\n\n## 🔥 PRESET CONFIGURATIONS\n\n### ⚡ QUALITY PRESETS\n| Preset | Resolution | Frames | Steps | LoRA | Upscale | Time | VRAM |\n|--------|------------|--------|-------|------|---------|------|------|\n| 🚀 Draft | 512x320 | 33 | 2 | 0.5 | None | ~30s | 15GB |\n| ⚖️ Standard | 832x480 | 81 | 4 | 0.4 | None | ~5min | 25GB |\n| 💎 Quality | 832x480 | 97 | 6 | 0.3 | 1.5x | ~12min | 30GB |\n| 🎬 Production | 1280x720 | 129 | 8 | 0.3 | 2x | ~30min | 45GB |\n| 👑 Cinema | 1280x720 | 161 | 10 | 0.25 | 2x | ~45min | 48GB |\n\n---\n\n## 📋 PIPELINE STAGES\n\n```\n┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐\n│  1. SETUP   │ → │ 2. GENERATE │ → │ 3. ENHANCE  │ → │ 4. UPSCALE  │ → │  5. EXPORT  │\n│  Models &   │    │   T2V Core  │    │  Denoise &  │    │   Video     │    │  MP4/WebP   │\n│   LoRAs     │    │  Generation │    │   Refine    │    │  Upscaler   │    │   Output    │\n└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘\n```\n\n---\n\n## 🎯 ASPECT RATIO GUIDE\n| Ratio | Width | Height | Use Case |\n|-------|-------|--------|----------|\n| 16:9 | 832 | 480 | YouTube, Standard |\n| 16:9 HD | 1280 | 720 | High Quality |\n| 9:16 | 480 | 832 | TikTok, Reels, Shorts |\n| 1:1 | 512 | 512 | Instagram, Square |\n| 21:9 | 896 | 384 | Cinematic Ultra-wide |\n| 4:3 | 640 | 480 | Classic TV |\n\n---\n\n## ⏱️ DURATION CALCULATOR @16fps\n| Frames | Seconds | Frames | Seconds | Frames | Seconds |\n|--------|---------|--------|---------|--------|--------|\n| 17 | 1s | 65 | 4s | 129 | 8s |\n| 33 | 2s | 81 | 5s | 145 | 9s |\n| 49 | 3s | 97 | 6s | 161 | 10s |"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 1001,
+      "type": "MarkdownNote",
+      "pos": [-1400, -100],
+      "size": [650, 550],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📝 PROMPT ENGINEERING GUIDE",
+      "properties": {},
+      "widgets_values": ["## Professional Prompt Structure\n\n```\n[STYLE] [SUBJECT] [APPEARANCE] [ACTION]\n[ENVIRONMENT] [LIGHTING] [CAMERA] [QUALITY]\n```\n\n---\n\n### 🎬 CINEMATIC TEMPLATE\n```\nCinematic shot of [subject] [action].\n[Environment description]. [Time of day].\n[Camera movement]. Film grain, \nanamorphic lens, shallow depth of field,\nprofessional color grading.\n```\n\n### 🎨 ARTISTIC TEMPLATE\n```\n[Art style] depicting [subject] [action].\n[Mood/atmosphere]. [Color palette].\n[Movement description]. Dramatic lighting,\nstylized, award-winning composition.\n```\n\n### 📹 COMMERCIAL TEMPLATE\n```\nProfessional [product/subject] showcase.\n[Key features]. [Setting]. Clean studio\nlighting, smooth rotation, premium feel,\n4K quality, commercial grade.\n```\n\n---\n\n### 💡 PRO TIPS\n1. Start with style/mood keywords\n2. Be specific about subject details\n3. Describe motion explicitly\n4. Include camera movement\n5. End with quality keywords"],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 1002,
+      "type": "MarkdownNote",
+      "pos": [-720, -100],
+      "size": [650, 550],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎥 MOTION & CAMERA DICTIONARY",
+      "properties": {},
+      "widgets_values": ["## Subject Motion Keywords\n\n| Intensity | Keywords |\n|-----------|----------|\n| Subtle | `slight movement, gentle sway, breathing, blinking` |\n| Moderate | `walking, turning, flowing, dancing, gesturing` |\n| Dynamic | `running, jumping, exploding, flying, rapid motion` |\n| Fluid | `morphing, transforming, melting, dissolving` |\n\n---\n\n## Camera Movement Keywords\n\n| Type | Keywords | Effect |\n|------|----------|--------|\n| Static | `locked shot, tripod, fixed camera` | Stability |\n| Pan | `pan left/right, horizontal sweep` | Reveal |\n| Tilt | `tilt up/down, vertical movement` | Scale |\n| Dolly | `dolly in/out, push in, pull back` | Intimacy |\n| Track | `tracking shot, follow shot` | Action |\n| Orbit | `orbit, revolve, 360 rotation` | Showcase |\n| Crane | `crane up/down, aerial descent` | Drama |\n| Handheld | `handheld, shaky cam` | Urgency |\n| Steadicam | `steadicam, smooth glide` | Flow |\n\n---\n\n## Cinematic Techniques\n```\nrack focus, depth of field, lens flare,\nbokeh, motion blur, time-lapse,\nslow motion, speed ramp, whip pan\n```"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 2,
+      "type": "UNETLoader",
+      "pos": [-50, -600],
+      "size": [370, 82],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [2]
+        }
+      ],
+      "title": "🧠 STAGE 1: Diffusion Model",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.1_t2v_14B_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_t2v_14B_fp16.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": ["wan2.1_t2v_14B_fp16.safetensors", "default"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "pos": [-50, -480],
+      "size": [370, 106],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [3]
+        }
+      ],
+      "title": "📝 Text Encoder (CLIP)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "umt5_xxl_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": ["umt5_xxl_fp16.safetensors", "wan", "default"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [-50, -340],
+      "size": [370, 58],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [4]
+        }
+      ],
+      "title": "🎨 VAE Decoder",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "wan_2.1_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": ["wan_2.1_vae.safetensors"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 5,
+      "type": "LoraLoader",
+      "pos": [-50, -250],
+      "size": [370, 126],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [5]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [6]
+        }
+      ],
+      "title": "⚡ Speed LoRA (Required)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "LoraLoader",
+        "models": [
+          {
+            "name": "Wan21_CausVid_14B_T2V_lora_rank32.safetensors",
+            "url": "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan21_CausVid_14B_T2V_lora_rank32.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": ["Wan21_CausVid_14B_T2V_lora_rank32.safetensors", 0.4, 1],
+      "color": "#162447",
+      "bgcolor": "#1f4068"
+    },
+    {
+      "id": 6,
+      "type": "LoraLoader",
+      "pos": [-50, -90],
+      "size": [370, 126],
+      "flags": {},
+      "order": 7,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 5
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [7]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [8]
+        }
+      ],
+      "title": "🎨 Style LoRA #1 (Optional)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "LoraLoader"
+      },
+      "widgets_values": ["style_lora_1.safetensors", 0.7, 1],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 7,
+      "type": "LoraLoader",
+      "pos": [-50, 70],
+      "size": [370, 126],
+      "flags": {},
+      "order": 8,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 7
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [9]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [10, 11]
+        }
+      ],
+      "title": "🎨 Style LoRA #2 (Optional)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.38",
+        "Node name for S&R": "LoraLoader"
+      },
+      "widgets_values": ["style_lora_2.safetensors", 0.5, 1],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1003,
+      "type": "MarkdownNote",
+      "pos": [350, -600],
+      "size": [350, 400],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🔧 MODEL & LORA TOOLKIT",
+      "properties": {},
+      "widgets_values": ["## Speed LoRA Settings\n| Strength | Speed | Quality |\n|----------|-------|--------|\n| 0.3 | ~6min | Best |\n| 0.4 | ~4min | Great ⭐ |\n| 0.5 | ~3min | Good |\n| 0.6+ | ~2min | Draft |\n\n---\n\n## Style LoRA Usage\n**Currently DISABLED**\n\n**To Enable:**\n1. Right-click → Mode → Always\n2. Select your LoRA file\n3. Set strength (0.5-0.8)\n4. Add trigger words!\n\n---\n\n## Multiple LoRAs\n```\nSpeed + Style1 + Style2\n  0.4     0.6      0.4\n= Combined effect\n```\n\n**⚠️ Total strength matters!**\nReduce if artifacts appear."],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 10,
+      "type": "CLIPTextEncode",
+      "pos": [-50, 240],
+      "size": [450, 180],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [12]
+        }
+      ],
+      "title": "✏️ STAGE 2: MAIN PROMPT",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["Cinematic shot of a majestic dragon soaring through dramatic storm clouds at twilight. Lightning illuminates its iridescent scales as it breathes fire. Rain and embers swirl around. Epic tracking shot following the dragon's flight. Hyper-detailed, film grain, anamorphic lens flare, professional color grading, blockbuster quality, 8K resolution."],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 11,
+      "type": "CLIPTextEncode",
+      "pos": [-50, 460],
+      "size": [450, 120],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [13]
+        }
+      ],
+      "title": "🚫 NEGATIVE PROMPT (Extended)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["blurry, low quality, pixelated, distorted, deformed, ugly, bad anatomy, extra limbs, missing limbs, floating limbs, disconnected limbs, mutation, mutated, disfigured, disgusting, watermark, text, logo, signature, static, frozen, jittery, flickering, duplicate frames, frame jumping, temporal artifacts, compression artifacts, noise, grain, overexposed, underexposed, washed out, oversaturated, amateur, unprofessional"],
+      "color": "#4a1010",
+      "bgcolor": "#6a2020"
+    },
+    {
+      "id": 12,
+      "type": "EmptyWanLatentVideo",
+      "pos": [450, 240],
+      "size": [350, 150],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [14]
+        }
+      ],
+      "title": "📐 VIDEO DIMENSIONS",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "EmptyWanLatentVideo"
+      },
+      "widgets_values": [832, 480, 81, 1],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 1004,
+      "type": "MarkdownNote",
+      "pos": [450, 430],
+      "size": [350, 280],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📐 DIMENSION PRESETS",
+      "properties": {},
+      "widgets_values": ["## Quick Copy Presets\n\n**🎬 YouTube/Standard (16:9)**\n`832 x 480` or `1280 x 720`\n\n**📱 TikTok/Reels (9:16)**\n`480 x 832` or `720 x 1280`\n\n**📷 Instagram (1:1)**\n`512 x 512` or `768 x 768`\n\n**🎥 Cinematic (21:9)**\n`896 x 384`\n\n---\n\n**Frame Presets:**\n- 2 sec = 33 frames\n- 5 sec = 81 frames ⭐\n- 8 sec = 129 frames\n- 10 sec = 161 frames"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 13,
+      "type": "ModelSamplingSD3",
+      "pos": [850, 100],
+      "size": [315, 58],
+      "flags": {"collapsed": true},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [15]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [8]
+    },
+    {
+      "id": 14,
+      "type": "KSampler",
+      "pos": [850, 150],
+      "size": [350, 310],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 15
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 13
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [16]
+        }
+      ],
+      "title": "🎲 STAGE 3: GENERATION",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 4, 1, "uni_pc", "simple", 1],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 1005,
+      "type": "MarkdownNote",
+      "pos": [850, 500],
+      "size": [350, 320],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎲 SAMPLER PRESETS",
+      "properties": {},
+      "widgets_values": ["## Quality Presets\n\n**🚀 Draft Mode**\n```\nsteps: 2 | cfg: 1\nsampler: uni_pc | scheduler: simple\n```\n\n**⚖️ Standard Mode** ⭐\n```\nsteps: 4 | cfg: 1\nsampler: uni_pc | scheduler: simple\n```\n\n**💎 Quality Mode**\n```\nsteps: 6 | cfg: 1\nsampler: dpmpp_2m | scheduler: karras\n```\n\n**👑 Cinema Mode**\n```\nsteps: 8-10 | cfg: 1\nsampler: dpmpp_2m | scheduler: karras\n```\n\n---\n\n**💡 Seed Management:**\n- `randomize` = Explore\n- `fixed` = Reproduce\n- Note seeds you like!"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 15,
+      "type": "VAEDecode",
+      "pos": [1250, 150],
+      "size": [280, 46],
+      "flags": {"collapsed": true},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 16
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [17, 18, 19, 20]
+        }
+      ],
+      "title": "VAE Decode",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "ImageScaleBy",
+      "pos": [1250, 200],
+      "size": [315, 82],
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [21]
+        }
+      ],
+      "title": "🔍 STAGE 4: UPSCALE (Optional)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "ImageScaleBy"
+      },
+      "widgets_values": ["lanczos", 1.5],
+      "color": "#4a3a6a",
+      "bgcolor": "#5a4a8a"
+    },
+    {
+      "id": 1006,
+      "type": "MarkdownNote",
+      "pos": [1250, 320],
+      "size": [315, 200],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🔍 UPSCALE TOOLKIT",
+      "properties": {},
+      "widgets_values": ["**Currently DISABLED**\n\n**To Enable:**\nRight-click → Mode → Always\n\n**Scale Factors:**\n- 1.5x = 50% larger\n- 2.0x = Double size\n- 4.0x = Quadruple (slow!)\n\n**Methods:**\n- `lanczos` = Best quality ⭐\n- `bilinear` = Faster\n- `nearest` = Pixelated look\n\n**⚠️ Higher = More VRAM + Time**"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 20,
+      "type": "PreviewImage",
+      "pos": [1600, 150],
+      "size": [450, 400],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [],
+      "title": "👁️ PREVIEW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#1a3a5a",
+      "bgcolor": "#2a5a8a"
+    },
+    {
+      "id": 21,
+      "type": "CreateVideo",
+      "pos": [2100, 150],
+      "size": [300, 82],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [22]
+        }
+      ],
+      "title": "🎬 STAGE 5: CREATE VIDEO",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [16],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 22,
+      "type": "SaveVideo",
+      "pos": [2100, 280],
+      "size": [420, 280],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 22
+        }
+      ],
+      "outputs": [],
+      "title": "💾 OUTPUT: MP4 VIDEO",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": ["pro_t2v/video", "auto", "auto"],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 23,
+      "type": "SaveAnimatedWEBP",
+      "pos": [2100, 600],
+      "size": [420, 180],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [],
+      "title": "💾 OUTPUT: ANIMATED WEBP",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.34",
+        "Node name for S&R": "SaveAnimatedWEBP"
+      },
+      "widgets_values": ["pro_t2v/animation", 16, true, 95, "default"],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 1007,
+      "type": "MarkdownNote",
+      "pos": [2100, 820],
+      "size": [420, 180],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "💾 OUTPUT SETTINGS",
+      "properties": {},
+      "widgets_values": ["**Output Locations:**\n```\nComfyUI/output/pro_t2v/video/\nComfyUI/output/pro_t2v/animation/\n```\n\n**Format Comparison:**\n| Format | Size | Quality | Looping |\n|--------|------|---------|--------|\n| MP4 | Small | Great | Manual |\n| WebP | Medium | Good | Auto ⭐ |"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 1008,
+      "type": "MarkdownNote",
+      "pos": [1600, 600],
+      "size": [450, 400],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🛠️ TROUBLESHOOTING & TIPS",
+      "properties": {},
+      "widgets_values": ["## Common Issues & Fixes\n\n| Problem | Solution |\n|---------|----------|\n| Blurry output | Steps ↑ 6-8, LoRA ↓ 0.3 |\n| Wrong subject | More specific prompt |\n| No motion | Add action verbs |\n| Shaky/jittery | LoRA ↓ 0.3-0.35 |\n| Out of memory | Resolution ↓, Frames ↓ |\n| Artifacts | Improve negative prompt |\n| Too slow | LoRA ↑ 0.5, Steps ↓ 2 |\n| Colors wrong | Add color keywords |\n\n---\n\n## Pro Workflow Tips\n\n1. **Test Fast:** 512x320, 33f, 2 steps\n2. **Iterate Prompts:** Find what works\n3. **Lock Seed:** When happy, fix seed\n4. **Scale Up:** Increase res/frames\n5. **Final Polish:** Enable upscale\n\n---\n\n## Batch Processing\nQueue multiple prompts by:\n1. Change prompt\n2. Click Queue\n3. Repeat\n\nAll jobs run sequentially!"],
+      "color": "#422",
+      "bgcolor": "#633"
+    },
+    {
+      "id": 1009,
+      "type": "MarkdownNote",
+      "pos": [-50, 620],
+      "size": [450, 200],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎯 EXAMPLE PROMPTS",
+      "properties": {},
+      "widgets_values": ["**Copy & Modify These:**\n\n🐉 Fantasy: `Cinematic dragon soaring through storm clouds, breathing fire, lightning, epic tracking shot, 8K`\n\n🌊 Nature: `Massive ocean wave crashing in slow motion, golden sunset, foam spray, drone shot rising, documentary`\n\n👤 Portrait: `Fashion model walking runway, flowing dress, dramatic spotlight, slow motion, commercial quality`\n\n🚗 Action: `Sports car drifting around corner, tire smoke, neon city lights, tracking shot, cinematic`"],
+      "color": "#223",
+      "bgcolor": "#335"
+    }
+  ],
+  "links": [
+    [2, 2, 0, 5, 0, "MODEL"],
+    [3, 3, 0, 5, 1, "CLIP"],
+    [4, 4, 0, 15, 1, "VAE"],
+    [5, 5, 0, 6, 0, "MODEL"],
+    [6, 5, 1, 6, 1, "CLIP"],
+    [7, 6, 0, 7, 0, "MODEL"],
+    [8, 6, 1, 7, 1, "CLIP"],
+    [9, 7, 0, 13, 0, "MODEL"],
+    [10, 7, 1, 10, 0, "CLIP"],
+    [11, 7, 1, 11, 0, "CLIP"],
+    [12, 10, 0, 14, 1, "CONDITIONING"],
+    [13, 11, 0, 14, 2, "CONDITIONING"],
+    [14, 12, 0, 14, 3, "LATENT"],
+    [15, 13, 0, 14, 0, "MODEL"],
+    [16, 14, 0, 15, 0, "LATENT"],
+    [17, 15, 0, 16, 0, "IMAGE"],
+    [18, 15, 0, 20, 0, "IMAGE"],
+    [19, 15, 0, 21, 0, "IMAGE"],
+    [20, 15, 0, 23, 0, "IMAGE"],
+    [21, 16, 0, 21, 0, "IMAGE"],
+    [22, 21, 0, 22, 0, "VIDEO"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "📋 MASTER CONTROL PANEL & GUIDES",
+      "bounding": [-1420, -940, 1340, 1820],
+      "color": "#16213e",
+      "font_size": 28,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "🔧 STAGE 1: MODEL LOADING",
+      "bounding": [-70, -640, 800, 900],
+      "color": "#16213e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "✏️ STAGE 2: PROMPT ENGINEERING",
+      "bounding": [-70, 200, 870, 640],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "🎲 STAGE 3: GENERATION",
+      "bounding": [830, 60, 390, 780],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "🔍 STAGE 4: POST-PROCESSING",
+      "bounding": [1230, 110, 340, 430],
+      "color": "#4a3a6a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "👁️ PREVIEW",
+      "bounding": [1580, 110, 490, 920],
+      "color": "#1a3a5a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "💾 STAGE 5: EXPORT",
+      "bounding": [2080, 110, 460, 920],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.4,
+      "offset": [1500, 1100]
+    },
+    "frontendVersion": "1.30.6",
+    "node_versions": {
+      "comfy-core": "0.3.34"
+    }
+  },
+  "version": 0.4
+}
