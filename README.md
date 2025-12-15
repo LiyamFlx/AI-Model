@@ -1,4 +1,52 @@
-# Image to Video Generator
+# Wan 2.1 Video Generation Workflows
+
+Professional ComfyUI workflows for AI video generation using Wan 2.1 models.
+
+## Available Workflows
+
+| Workflow | Type | Use Case | Speed |
+|----------|------|----------|-------|
+| **wan21_t2v_fp8_superquality.json** | Text-to-Video | Generate video from text description only | ~15-25 min |
+| **text_to_video_optimized.json** | Text-to-Video | Fast T2V with LoRA acceleration | ~4-5 min |
+| **professional_t2v_pipeline.json** | Text-to-Video | Advanced T2V with quality presets | ~3-30 min |
+| **image_to_video_optimized.json** | Image-to-Video | Animate any image | ~4-5 min |
+| **image_to_video_simple.json** | Image-to-Video | Simple I2V for beginners | ~4-5 min |
+
+---
+
+## NEW: Super Quality Text-to-Video (FP8)
+
+**File:** `wan21_t2v_fp8_superquality.json`
+
+Generate videos purely from text with maximum quality settings:
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| **Model** | `wan2.1_t2v_14B_fp8_e4m3fn` | FP8 quantized (50% less VRAM) |
+| **Text Encoder** | `umt5_xxl_fp8_e4m3fn_scaled` | Memory efficient |
+| **Resolution** | 832×480 (16:9) | YouTube standard |
+| **Frames** | 81 (~5 sec) | Good duration |
+| **Steps** | 30 | Maximum quality |
+| **CFG** | 6.0 | High guidance |
+| **Scheduler** | beta | Better temporal consistency |
+| **CRF** | 17 | High quality video |
+
+### Required Models (FP8 Version)
+
+```bash
+# Download FP8 diffusion model (~14GB)
+wget -P models/diffusion_models/ "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_t2v_14B_fp8_e4m3fn.safetensors"
+
+# Download FP8 text encoder (~5GB)
+wget -P models/text_encoders/ "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+
+# Download VAE (~300MB)
+wget -P models/vae/ "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
+```
+
+---
+
+## Image-to-Video Workflows
 
 Transform any image into a 5-10 second AI-generated video using Wan 2.1 VACE model in ComfyUI.
 

@@ -1,0 +1,634 @@
+{
+  "id": "wan21-t2v-fp8-superquality-v1",
+  "revision": 0,
+  "last_node_id": 50,
+  "last_link_id": 50,
+  "nodes": [
+    {
+      "id": 100,
+      "type": "MarkdownNote",
+      "pos": [-1100, -700],
+      "size": [1050, 750],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎬 WAN 2.1 TEXT-TO-VIDEO | FP8 SUPER QUALITY MODE",
+      "properties": {},
+      "widgets_values": ["# Wan 2.1 T2V - FP8 Super Quality Pipeline\n\n## 🔥 BAKED-IN SETTINGS\n| Setting | Value | Purpose |\n|---------|-------|--------|\n| **Model** | `wan2.1_t2v_14B_fp8_e4m3fn` | FP8 quantized (50% less VRAM) |\n| **Text Encoder** | `umt5_xxl_fp8_e4m3fn_scaled` | FP8 scaled encoder |\n| **VAE** | `wan_2.1_vae` | Standard Wan VAE |\n| **Resolution** | 832×480 (16:9) | Optimal 480p quality |\n| **Frames** | 81 (~5 sec @16fps) | Good duration |\n| **Steps** | 30 | Maximum quality (no LoRA) |\n| **CFG** | 6.0 | High guidance for detail |\n| **Sampler** | `uni_pc` | Best for Wan models |\n| **Scheduler** | `beta` | Better temporal consistency |\n| **CRF** | 17 | High quality video output |\n| **FPS** | 16 | Native Wan framerate |\n\n---\n\n## ⚡ NO LORA = PURE QUALITY\nThis workflow uses **30 steps without speed LoRA** for maximum quality.\n- Generation time: ~15-25 minutes (vs 4 min with LoRA)\n- Quality: Maximum detail and coherence\n- Best for: Final renders, portfolio pieces\n\n---\n\n## 📐 RESOLUTION OPTIONS\n| Ratio | Width | Height | Use Case |\n|-------|-------|--------|----------|\n| 16:9 | 832 | 480 | YouTube ⭐ |\n| 16:9 HD | 1280 | 720 | High Quality |\n| 9:16 | 480 | 832 | TikTok/Reels |\n| 1:1 | 512 | 512 | Instagram |\n\n---\n\n## ⏱️ FRAME COUNT → DURATION @16fps\n| Frames | Duration | Frames | Duration |\n|--------|----------|--------|----------|\n| 33 | ~2 sec | 97 | ~6 sec |\n| 49 | ~3 sec | 129 | ~8 sec |\n| 65 | ~4 sec | 161 | ~10 sec |\n| 81 | ~5 sec ⭐ | | |"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 101,
+      "type": "MarkdownNote",
+      "pos": [-1100, 100],
+      "size": [500, 450],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📝 PROMPT FORMULA (IMPORTANT!)",
+      "properties": {},
+      "widgets_values": ["## T2V Prompt Structure\n\n```\n[STYLE] + [SUBJECT] + [ACTION] +\n[ENVIRONMENT] + [CAMERA] + [QUALITY]\n```\n\n---\n\n### Example Prompt:\n```\nCinematic video of a majestic lion\nwalking slowly through golden savanna\ngrass at sunset. Warm orange light\nbathes the scene, dust particles\nfloating in the air. The lion's mane\nflows gently in the breeze.\nCamera tracking shot, shallow depth\nof field, film grain, natural movement,\nprofessional cinematography, 4K quality,\nsmooth motion.\n```\n\n---\n\n### Key Elements:\n1. **Style first** - Cinematic, anime, realistic\n2. **Subject details** - Who/what is in frame\n3. **Action verbs** - Walking, flying, morphing\n4. **Environment** - Where it happens\n5. **Camera movement** - Pan, track, dolly\n6. **Quality keywords** - 4K, film grain, etc."],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 102,
+      "type": "MarkdownNote",
+      "pos": [-570, 100],
+      "size": [500, 450],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎥 CAMERA & MOTION KEYWORDS",
+      "properties": {},
+      "widgets_values": ["## Camera Movements:\n| Keyword | Effect |\n|---------|--------|\n| `static shot` | No camera movement |\n| `slow pan left/right` | Horizontal sweep |\n| `tilt up/down` | Vertical movement |\n| `dolly in/out` | Move toward/away |\n| `tracking shot` | Follow subject |\n| `orbit shot` | Circle around |\n| `crane shot` | Rise dramatically |\n| `handheld` | Natural shake |\n| `aerial view` | From above |\n| `POV shot` | First-person |\n\n---\n\n## Motion Intensity:\n| Level | Keywords |\n|-------|----------|\n| Subtle | `gentle, slow, slight` |\n| Moderate | `walking, flowing, drifting` |\n| Dynamic | `running, flying, rapid` |\n| Fluid | `morphing, transforming` |\n\n---\n\n## Style Keywords:\n`cinematic` `film grain` `anamorphic`\n`photorealistic` `anime` `noir`\n`golden hour` `dramatic lighting`"],
+      "color": "#223",
+      "bgcolor": "#335"
+    },
+    {
+      "id": 2,
+      "type": "UNETLoader",
+      "pos": [-30, -500],
+      "size": [400, 82],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [1]
+        }
+      ],
+      "title": "🧠 Diffusion Model (FP8 - Memory Efficient)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "wan2.1_t2v_14B_fp8_e4m3fn.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_t2v_14B_fp8_e4m3fn.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": ["wan2.1_t2v_14B_fp8_e4m3fn.safetensors", "default"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "pos": [-30, -380],
+      "size": [400, 106],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [2, 3]
+        }
+      ],
+      "title": "📝 Text Encoder (FP8 Scaled)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": ["umt5_xxl_fp8_e4m3fn_scaled.safetensors", "wan", "default"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [-30, -240],
+      "size": [400, 58],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [4]
+        }
+      ],
+      "title": "🎨 VAE Decoder",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "wan_2.1_vae.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": ["wan_2.1_vae.safetensors"],
+      "color": "#1a1a2e",
+      "bgcolor": "#16213e"
+    },
+    {
+      "id": 103,
+      "type": "MarkdownNote",
+      "pos": [400, -500],
+      "size": [350, 350],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🔧 MODEL INFO",
+      "properties": {},
+      "widgets_values": ["## FP8 vs FP16 Models\n\n**FP8 (This Workflow):**\n- ~14GB VRAM for model\n- ~50% less memory usage\n- Slightly faster loading\n- Near-identical quality\n\n**FP16 (Standard):**\n- ~28GB VRAM for model\n- Maximum precision\n- Slower on consumer GPUs\n\n---\n\n## Required Downloads:\n\n**Diffusion Model:**\n`models/diffusion_models/`\n↳ `wan2.1_t2v_14B_fp8_e4m3fn.safetensors`\n\n**Text Encoder:**\n`models/text_encoders/`\n↳ `umt5_xxl_fp8_e4m3fn_scaled.safetensors`\n\n**VAE:**\n`models/vae/`\n↳ `wan_2.1_vae.safetensors`"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [-30, -130],
+      "size": [500, 180],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [5]
+        }
+      ],
+      "title": "✏️ POSITIVE PROMPT (Write Your Scene Here!)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["Cinematic video of a majestic lion walking slowly through golden savanna grass at sunset. Warm orange light bathes the scene, dust particles floating in the air. The lion's mane flows gently in the breeze. Camera tracking shot, shallow depth of field, film grain, natural movement, professional cinematography, 4K quality, smooth motion."],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [-30, 90],
+      "size": [500, 130],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [6]
+        }
+      ],
+      "title": "🚫 NEGATIVE PROMPT",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": ["blurry, distorted, low quality, artifacts, flickering, jittery motion, deformed, bad anatomy, extra limbs, poorly drawn, disfigured, watermark, text, logo, grainy, pixelated, oversaturated, static image, frozen frame, glitch, morphed, worst quality, low resolution, jpeg artifacts, ugly"],
+      "color": "#4a1010",
+      "bgcolor": "#6a2020"
+    },
+    {
+      "id": 8,
+      "type": "EmptyWanLatentVideo",
+      "pos": [510, -130],
+      "size": [350, 150],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [7]
+        }
+      ],
+      "title": "📐 VIDEO DIMENSIONS (832×480, 81 frames)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "EmptyWanLatentVideo"
+      },
+      "widgets_values": [832, 480, 81, 1],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 104,
+      "type": "MarkdownNote",
+      "pos": [510, 60],
+      "size": [350, 220],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "📐 QUICK PRESETS",
+      "properties": {},
+      "widgets_values": ["## Resolution Presets:\n\n**YouTube 16:9:** `832 × 480` ⭐\n**YouTube HD:** `1280 × 720`\n**TikTok 9:16:** `480 × 832`\n**Square 1:1:** `512 × 512`\n\n---\n\n## Frame Presets:\n- 2 sec = `33` frames\n- 3 sec = `49` frames\n- 5 sec = `81` frames ⭐\n- 8 sec = `129` frames\n- 10 sec = `161` frames"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 9,
+      "type": "ModelSamplingSD3",
+      "pos": [900, -150],
+      "size": [315, 58],
+      "flags": {"collapsed": false},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [8]
+        }
+      ],
+      "title": "⚙️ Model Sampling Config",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [8]
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [900, -50],
+      "size": [350, 320],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 8
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [9]
+        }
+      ],
+      "title": "🎲 GENERATE (30 steps, CFG 6.0, beta scheduler)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [0, "randomize", 30, 6, "uni_pc", "beta", 1],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 105,
+      "type": "MarkdownNote",
+      "pos": [900, 310],
+      "size": [350, 300],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🎲 SAMPLER SETTINGS",
+      "properties": {},
+      "widgets_values": ["## Current Settings (Super Quality):\n- **Steps:** 30 (max quality)\n- **CFG:** 6.0 (high guidance)\n- **Sampler:** uni_pc\n- **Scheduler:** beta\n\n---\n\n## Why These Settings?\n\n**30 Steps:** Without LoRA, more steps = better quality. 30 is the sweet spot.\n\n**CFG 6.0:** Higher guidance keeps the model focused on your prompt.\n\n**Beta Scheduler:** Better temporal consistency than \"simple\" for video.\n\n---\n\n## Generation Time:\n~15-25 minutes on RTX 4090\n~25-40 minutes on RTX 3090\n\n**💡 For faster tests, reduce steps to 15-20**"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 11,
+      "type": "VAEDecode",
+      "pos": [1300, -50],
+      "size": [210, 46],
+      "flags": {"collapsed": false},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 9
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [10, 11, 12]
+        }
+      ],
+      "title": "VAE Decode",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 20,
+      "type": "PreviewImage",
+      "pos": [1300, 40],
+      "size": [400, 350],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 10
+        }
+      ],
+      "outputs": [],
+      "title": "👁️ PREVIEW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "color": "#1a3a5a",
+      "bgcolor": "#2a5a8a"
+    },
+    {
+      "id": 13,
+      "type": "VHS_VideoCombine",
+      "pos": [1750, -50],
+      "size": [550, 400],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 11
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "title": "💾 OUTPUT: MP4 VIDEO (CRF 17)",
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "1.7.2",
+        "Node name for S&R": "VHS_VideoCombine"
+      },
+      "widgets_values": {
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan21_t2v_quality",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 17,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true
+      },
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 14,
+      "type": "SaveAnimatedWEBP",
+      "pos": [1750, 400],
+      "size": [400, 180],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 12
+        }
+      ],
+      "outputs": [],
+      "title": "💾 OUTPUT: Animated WebP (Looping)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.46",
+        "Node name for S&R": "SaveAnimatedWEBP"
+      },
+      "widgets_values": ["wan21_t2v_quality/animation", 16, true, 90, "default"],
+      "color": "#1e5128",
+      "bgcolor": "#2a7a3a"
+    },
+    {
+      "id": 106,
+      "type": "MarkdownNote",
+      "pos": [1750, 620],
+      "size": [400, 200],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "💾 OUTPUT INFO",
+      "properties": {},
+      "widgets_values": ["## Output Settings:\n\n**MP4 Video:**\n- CRF: 17 (high quality)\n- FPS: 16 (native Wan)\n- Codec: H.264\n- Location: `output/wan21_t2v_quality/`\n\n**WebP Animation:**\n- Quality: 90%\n- Looping: Enabled\n- Good for sharing online\n\n---\n\n**💡 Lower CRF = Higher quality**\n- CRF 15-17: Excellent\n- CRF 18-23: Good\n- CRF 24+: Lower quality"],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 107,
+      "type": "MarkdownNote",
+      "pos": [-30, 260],
+      "size": [500, 350],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "🚀 HOW TO USE THIS WORKFLOW",
+      "properties": {},
+      "widgets_values": ["## Quick Start:\n\n### 1️⃣ Write Your Prompt\nDescribe the scene in the green POSITIVE PROMPT box.\nBe specific about:\n- What you want to see\n- What action/motion happens\n- Camera movement\n- Style/mood\n\n### 2️⃣ Adjust Settings (Optional)\n- **Resolution:** Change width/height in Video Dimensions\n- **Duration:** Change frames (81 = 5 sec)\n- **Speed test:** Reduce steps to 15\n\n### 3️⃣ Click Queue Prompt\nGeneration takes ~15-25 minutes.\n\n### 4️⃣ Find Your Video\n`ComfyUI/output/wan21_t2v_quality/`\n\n---\n\n## Example Prompts to Try:\n\n🦁 **Wildlife:**\n`Majestic lion walking through savanna at sunset`\n\n🌊 **Nature:**\n`Ocean waves crashing on rocky shore, slow motion`\n\n🚗 **Action:**\n`Sports car drifting on mountain road, cinematic`"],
+      "color": "#233",
+      "bgcolor": "#355"
+    }
+  ],
+  "links": [
+    [1, 2, 0, 9, 0, "MODEL"],
+    [2, 3, 0, 6, 0, "CLIP"],
+    [3, 3, 0, 7, 0, "CLIP"],
+    [4, 4, 0, 11, 1, "VAE"],
+    [5, 6, 0, 10, 1, "CONDITIONING"],
+    [6, 7, 0, 10, 2, "CONDITIONING"],
+    [7, 8, 0, 10, 3, "LATENT"],
+    [8, 9, 0, 10, 0, "MODEL"],
+    [9, 10, 0, 11, 0, "LATENT"],
+    [10, 11, 0, 20, 0, "IMAGE"],
+    [11, 11, 0, 13, 0, "IMAGE"],
+    [12, 11, 0, 14, 0, "IMAGE"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "📋 DOCUMENTATION & GUIDES",
+      "bounding": [-1120, -740, 1100, 1180],
+      "color": "#16213e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "🔧 MODEL LOADING (FP8)",
+      "bounding": [-50, -540, 820, 420],
+      "color": "#16213e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "✏️ PROMPTS (Write Here!)",
+      "bounding": [-50, -170, 530, 480],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "📐 VIDEO SETTINGS",
+      "bounding": [490, -170, 380, 480],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "🎲 GENERATION (30 Steps)",
+      "bounding": [880, -190, 390, 720],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "👁️ PREVIEW",
+      "bounding": [1280, -90, 440, 520],
+      "color": "#1a3a5a",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "💾 OUTPUTS (MP4 + WebP)",
+      "bounding": [1730, -90, 580, 950],
+      "color": "#1e5128",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5,
+      "offset": [1200, 900]
+    },
+    "frontendVersion": "1.30.6",
+    "node_versions": {
+      "comfy-core": "0.3.46"
+    }
+  },
+  "version": 0.4
+}
